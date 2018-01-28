@@ -1,0 +1,26 @@
+{
+  "name": "MegaBot",
+  "version": "1.0.0",
+  "description": "Test Bot for Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devNoiseConsulting/MegaBot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "Michael Flynn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devNoiseConsulting/MegaBot/issues"
+  },
+  "homepage": "https://github.com/devNoiseConsulting/MegaBot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.0"
+  }
+}
