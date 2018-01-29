@@ -19,15 +19,11 @@ const assignTeam = (msg, team) => {
     return member
       .addRole(role.id)
       .then(() => {
-        let name = member.nick || member.username;
-        if (team !== 'Sponsored') {
-          return `Everybody welcome our newest Team ${team} member, ${name}!`;
-        } else {
-          return `Added to the sponsored @ tag!`;
-        }
+        let name = member.nickname || member.user.username;
+        return `Everybody welcome our newest Team ${team} member, ${name}!`;
       })
       .catch(e => {
-        console.log('assignTeam', team, e);
+        console.log('assignTeam', e);
         return errorMessage;
       });
   } else {
@@ -35,7 +31,7 @@ const assignTeam = (msg, team) => {
   }
 };
 
-const run = (client, message, args) => {
+const run = (message, args) => {
   const teamAliases = ['instinct', 'yellow', 'mystic', 'blue', 'valor', 'red'];
   let team;
   let response = 'I have no idea what team that is.';
@@ -65,6 +61,11 @@ const run = (client, message, args) => {
   });
 };
 
-exports.teams = teams;
-exports.assignTeam = assignTeam;
-exports.run = run;
+module.exports = {
+  name: 'team',
+  description: 'Teams!',
+  args: true,
+  teams: teams,
+  assignTeam: assignTeam,
+  execute: run
+};
