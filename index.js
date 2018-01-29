@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
+const fs = require('fs');
 
 client.on("ready", () => {
   console.log("I am ready!");
@@ -21,11 +22,19 @@ client.on("message", (message) => {
   // Exit and stop if the prefix is not there or if user is a bot
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
-  if (message.content.startsWith(config.prefix + "ping")) {
-    message.channel.send("pong!");
-  } else
-  if (message.content.startsWith(config.prefix + "foo")) {
-    message.channel.send("bar!");
+  // This is the best way to define args. Trust me.
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase().replace(/[^\w-]/, '');
+
+  // The list of if/else is replaced with those simple 2 lines:
+  try {
+    commandFilePath = `./commands/${command}.js`;
+    if (fs.existsSync(commandFilePath)) {
+      let commandFile = require(commandFilePath);
+      commandFile.run(client, message, args);
+    }
+  } catch (err) {
+    console.error(err);
   }
 });
 
