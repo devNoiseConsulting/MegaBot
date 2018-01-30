@@ -14,7 +14,7 @@ module.exports = {
         return;
       }
 
-      if (message.channel.type == 'text') {
+      if (message.channel.type == 'text' && message.channel.id.indexOf ("-raid") > -1) {
         message.channel.fetchMessages()
           .then(messages => {
             message.channel.bulkDelete(messages);
