@@ -10,16 +10,16 @@ const assignTeam = (msg, team) => {
     return badPromise;
   }
 
-  let roles = msg.channel.guild.roles;
-  let member = msg.member;
+  const roles = msg.channel.guild.roles;
+  const member = msg.member;
 
-  let role = roles.find(f => f.name === team);
+  const role = roles.find(f => f.name === team);
 
   if (role) {
     return member
       .addRole(role.id)
       .then(() => {
-        let name = member.nickname || member.user.username;
+        const name = member.nickname || member.user.username;
         return `Everybody welcome our newest Team ${team} member, ${name}!`;
       })
       .catch(e => {
@@ -34,7 +34,7 @@ const assignTeam = (msg, team) => {
 const run = (message, args) => {
   const teamAliases = ['instinct', 'yellow', 'mystic', 'blue', 'valor', 'red'];
   let team;
-  let response = 'I have no idea what team that is.';
+  const response = 'I have no idea what team that is.';
 
   const choice = args[0].toLowerCase();
   if (teamAliases.indexOf(choice) === -1) {
@@ -57,7 +57,7 @@ const run = (message, args) => {
   }
 
   assignTeam(message, team).then(result => {
-    message.channel.send(result).catch(console.error);
+    return message.channel.send(result).catch(console.error);
   });
 };
 

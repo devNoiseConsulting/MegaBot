@@ -1,6 +1,18 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const Sequelize = require('sequelize');
+
 const { prefix, token } = require('./config.json');
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect: 'sqlite',
+  logging: false,
+  operatorsAliases: false,
+  // SQLite only
+  storage: 'Nests.db'
+});
+const Nests = sequelize.import(__dirname + '/util/nests.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -15,6 +27,7 @@ for (const file of commandFiles) {
 const cooldowns = new Discord.Collection();
 
 client.on('ready', () => {
+  Nests.sync();
   console.log('Ready!');
 });
 
@@ -76,7 +89,7 @@ client.on('message', message => {
   }
 
   try {
-    command.execute(message, args);
+    command.execute(message, args, sequelize, Nests);
   } catch (error) {
     console.error(error);
     message.reply('there was an error trying to execute that command!');
