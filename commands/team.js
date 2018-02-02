@@ -15,7 +15,9 @@ const assignTeam = (msg, team) => {
 
   const role = roles.find(f => f.name === team);
 
-  const removeTeams = roles.filter(role => role.name !== team && (teams.indexOf(role.name) !== -1));
+  const removeTeams = roles.filter(
+    role => role.name !== team && teams.indexOf(role.name) !== -1
+  );
   member.removeRoles(removeTeams);
 
   if (role) {
